@@ -3,7 +3,7 @@ if [[ -z "$TMUX" && (("$TERM_PROGRAM" == "WezTerm" || "$TERM_PROGRAM" == "ghostt
 source "$BREW/opt/antidote/share/antidote/antidote.zsh"
 antidote load
 
-_evalcache op inject -i "$DOT/zsh/secret.sh"
+_evalcache sh "$DOT/zsh/secret.sh"
 
 source "$DOT/zsh/p10k.instant.zsh"
 source "$DOT/zsh/p10k.zsh"
@@ -14,7 +14,6 @@ source "$DOT/zsh/abbr.zsh"
 
 . "$HOME/.cargo/env"
 _evalcache atuin init zsh --disable-up-arrow
-_evalcache gh copilot alias -- zsh
 _evalcache mise activate zsh
 _evalcache s5cmd --install-completion
 _evalcache zoxide init zsh

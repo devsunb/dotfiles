@@ -1,4 +1,4 @@
-if [[ -z "$TMUX" && (("$TERM_PROGRAM" == "WezTerm" || "$TERM_PROGRAM" == "ghostty") && -z "$(tmux list-clients 2>/dev/null)") ]]; then exec tmux new -As main; fi
+if [[ -z "$TMUX" && ((-n "$SSH_CLIENT" || "$TERM_PROGRAM" == "WezTerm") && -z "$(tmux list-clients 2>/dev/null)") ]]; then exec tmux new -As main; fi
 
 source "$BREW/opt/antidote/share/antidote/antidote.zsh"
 antidote load

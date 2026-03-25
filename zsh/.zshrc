@@ -39,7 +39,7 @@ alias u="cd -"
 alias ..="cd .."
 
 if [[ "$OS" == "Mac" ]]; then
-  alias ra="trash"
+  ra() { if [[ $# -eq 0 ]]; then cd ~/.Trash; else trash "$@"; fi; }
   alias c="clippy"
   alias p="pasty"
 fi

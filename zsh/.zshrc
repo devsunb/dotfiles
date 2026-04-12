@@ -25,9 +25,6 @@ if [[ "$OS" == "Mac" ]]; then
   export PATH="$PATH:/Users/sunb/.lmstudio/bin"
 fi
 
-alias -g C="| sed -z '$ s/\n$//' | c"
-alias -g DC="| sed 's/\x1B\[[0-9;]\{1,\}[A-Za-z]//g'" # 색상 코드 제거
-
 alias x="exit"
 alias cat="bat"
 alias ls="eza --smart-group --time-style long-iso"
@@ -37,12 +34,12 @@ alias l="ls -alo --no-permissions"
 alias t="l -T --git-ignore"
 alias u="cd -"
 alias ..="cd .."
-
-if [[ "$OS" == "Mac" ]]; then
-  ra() { if [[ $# -eq 0 ]]; then cd ~/.Trash; else trash "$@"; fi; }
-  alias c="clippy"
-  alias p="pasty"
-fi
+fdh() { fd -HI -E /Library -E /OrbStack -E /.cache -E /go -E '/.*' -E node_modules "$@" ~; }
+rgh() { rg -. -g '!Library/' -g '!OrbStack/' -g '!go/' -g '!.*/' -g '!node_modules' "$@" ~; }
+ra() { if [[ $# -eq 0 ]]; then cd ~/.Trash; else trash "$@"; fi; }
+alias noc="sed 's/\x1B\[[0-9;]\{1,\}[A-Za-z]//g'" # remove color sequences
+alias c="sed -z '$ s/\n$//' | pbcopy"
+alias p="pbpaste"
 
 alias e="nvim"
 alias ee="nvim -i NONE --cmd 'let g:auto_session_enabled = v:false'"
@@ -51,7 +48,7 @@ alias ei="ee -c 'diffthis | vs +ene | diffthis | wincmd h'"
 alias nvimh="ee -c checkhealth"
 alias nvimu="ee '+lua vim.pack.update()'"
 
-alias em="emacsclient -cn 2>/dev/null || open -a Emacs"
+alias em="emacsclient"
 
 alias tm="t main"
 alias tk='s="$(tmux list-sessions -F "#S" | fzf -e)" && tmux kill-session -a -t "$s"'
@@ -59,24 +56,18 @@ alias tt='s="$(tmux list-sessions -F "#S" | fzf -e)" && tmux new -s "$s+" -t "$s
 alias tp='s="$(ls "$TMUXP" | cut -d. -f1 | fzf -e)" && tmuxp load -y "$TMUXP/$s.yaml" &>/dev/null'
 alias tkp='s="$(ls "$TMUXP" | cut -d. -f1 | fzf -e)" && tmux kill-session -t "$s" &>/dev/null; tmuxp load -y "$TMUXP/$s.yaml" &>/dev/null'
 
-alias gg="lazygit"
 alias g="git"
 alias ga="git add"
-alias gc="git commit"
-alias gf="git fetch --all --tags --prune"
+alias gg="lazygit"
 alias ggc="git -c gc.reflogExpire=0 -c gc.reflogExpireUnreachable=0 -c gc.rerereresolved=0 -c gc.rerereunresolved=0 -c gc.pruneExpire=now gc"
 alias ghb="gh browse"
 alias gp="git pull"
 alias grao="git remote add origin"
 alias grau="git remote add upstream"
-alias grgo="git remote get-url origin"
-alias grr="git remote rename origin upstream"
 alias grso="git remote set-url origin"
 alias gs="git status"
-alias gsw="git switch"
 alias gu="git push"
 alias guf="git push --force-with-lease"
-alias gw="git worktree"
 
 gcl() {
   if [ $# -lt 1 ]; then
